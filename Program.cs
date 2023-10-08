@@ -29,7 +29,7 @@ for (int i = 0; i < testCount; i++)
         domain = oisdbig[Random.Shared.Next(oisdbig.Length)];
         var query = DnsQueryFactory.CreateQuery(domain);
         var answers = dnsClient.Query(query, CancellationToken.None).Result.Answers;
-        var result = ((Ae.Dns.Protocol.Records.DnsDomainResource)answers[0].Resource).Domain;
+        var result = ((Ae.Dns.Protocol.Records.DnsDomainResource)answers.First(x=>x.Type==Ae.Dns.Protocol.Enums.DnsQueryType.CNAME).Resource).Domain;
         if (result != "blockpage.nextdns.io")
         {
             throw new Exception("Invalid result");
